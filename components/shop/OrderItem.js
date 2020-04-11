@@ -5,12 +5,13 @@ import {
 
 import CartItem from './CartItem';
 import Colors from '../../constants/Colors';
+import Card from '../ui/Card';
 
 const OrderItem = (props) => {
   const [showDetails, setShowDetails] = useState(false);
 
   return (
-    <View style={styles.orderItem}>
+    <Card style={styles.orderItem}>
       <View style={styles.summary}>
         <Text style={styles.totalAmount}>
         $
@@ -33,18 +34,12 @@ const OrderItem = (props) => {
           {props.items.map((cartItem) => <CartItem key={cartItem.productId} quantity={cartItem.quantity} amount={cartItem.sum} title={cartItem.productTitle} />)}
         </View>
         )}
-    </View>
+    </Card>
   );
 };
 
 const styles = StyleSheet.create({
   orderItem: {
-    shadowColor: 'black',
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-    backgroundColor: 'white',
     margin: 20,
     padding: 10,
     alignItems: 'center',

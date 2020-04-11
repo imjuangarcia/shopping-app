@@ -3,6 +3,8 @@ import {
   View, Text, Image, StyleSheet, TouchableOpacity, TouchableNativeFeedback, Platform,
 } from 'react-native';
 
+import Card from '../ui/Card';
+
 const ProductItem = (props) => {
   let TouchableComponent = TouchableOpacity;
 
@@ -11,7 +13,7 @@ const ProductItem = (props) => {
   }
 
   return (
-    <View style={styles.product}>
+    <Card style={styles.product}>
       <View style={styles.touchable}>
         <TouchableComponent onPress={props.onSelect} useForeground>
           <View>
@@ -29,7 +31,7 @@ const ProductItem = (props) => {
           </View>
         </TouchableComponent>
       </View>
-    </View>
+    </Card>
   );
 };
 
@@ -39,15 +41,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   product: {
-    shadowColor: 'black',
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-    backgroundColor: 'white',
     height: 300,
     margin: 20,
-    borderRadius: 8,
   },
   image: {
     width: '100%',
@@ -67,14 +62,14 @@ const styles = StyleSheet.create({
   },
   details: {
     alignItems: 'center',
-    height: '15%',
+    height: '17%',
     padding: 10,
   },
   actions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '25%',
+    height: '23%',
     paddingHorizontal: 20,
   },
 });
