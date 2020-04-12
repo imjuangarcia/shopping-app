@@ -6,29 +6,36 @@ export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const SET_PRODUCTS = 'SET_PRODUCTS';
 
 export const fetchProducts = () => async (dispatch) => {
-  const response = await fetch('https://shopping-cart-app-fc5f7.firebaseio.com/products.json');
+  try {
+    const response = await fetch('https://shopping-cart-app-fc5f7.firebaseio.com/products.json');
 
-  const responseData = await response.json();
-  const loadedProducts = [];
+    if (!response.ok) {
+      throw new Error('Something went wrong!');
+    }
 
-  for (const key in responseData) {
-    loadedProducts.push(
-      new Product(
-        key,
-        'u1',
-        responseData[key].title,
-        responseData[key].imageUrl,
-        responseData[key].description,
-        responseData[key].price,
-      ),
-    );
+    const responseData = await response.json();
+    const loadedProducts = [];
+
+    for (const key in responseData) {
+      loadedProducts.push(
+        new Product(
+          key,
+          'u1',
+          responseData[key].title,
+          responseData[key].imageUrl,
+          responseData[key].description,
+          responseData[key].price,
+        ),
+      );
+    }
+
+    dispatch({
+      type: SET_PRODUCTS,
+      products: loadedProducts,
+    });
+  } catch (error) {
+    throw error;
   }
-
-  console.log(loadedProducts);
-  dispatch({
-    type: SET_PRODUCTS,
-    products: loadedProducts,
-  });
 };
 
 export const deleteProduct = (productId) => ({
