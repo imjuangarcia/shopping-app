@@ -38,9 +38,15 @@ export const fetchProducts = () => async (dispatch) => {
   }
 };
 
-export const deleteProduct = (productId) => ({
-  type: DELETE_PRODUCT, pid: productId,
-});
+export const deleteProduct = (productId) => async (dispatch) => {
+  await fetch(`https://shopping-cart-app-fc5f7.firebaseio.com/products/${productId}.json`, {
+    method: 'DELETE',
+  });
+
+  dispatch({
+    type: DELETE_PRODUCT, pid: productId,
+  });
+};
 
 export const createProduct = (title, description, imageUrl, price) => async (dispatch) => {
   const response = await fetch('https://shopping-cart-app-fc5f7.firebaseio.com/products.json', {
@@ -70,12 +76,26 @@ export const createProduct = (title, description, imageUrl, price) => async (dis
   });
 };
 
-export const updateProduct = (id, title, description, imageUrl) => ({
-  type: UPDATE_PRODUCT,
-  pid: id,
-  productData: {
-    title,
-    description,
-    imageUrl,
-  },
-});
+export const updateProduct = (id, title, description, imageUrl) => async (dispatch) => {
+  await fetch(`https://shopping-cart-app-fc5f7.firebaseio.com/products/${id}.json`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      title,
+      description,
+      imageUrl,
+    }),
+  });
+
+  dispatch({
+    type: UPDATE_PRODUCT,
+    pid: id,
+    productData: {
+      title,
+      description,
+      imageUrl,
+    },
+  });
+};
