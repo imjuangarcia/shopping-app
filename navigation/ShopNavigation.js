@@ -5,7 +5,6 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import Colors from '../constants/Colors';
 import ProductsOverviewScreen from '../screens/shop/ProductsOverviewScreen';
 import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
 import CartScreen from '../screens/shop/CartScreen';
@@ -13,6 +12,9 @@ import OrdersScreen from '../screens/shop/OrdersScreen';
 import AuthScreen from '../screens/user/AuthScreen';
 import UserProductsScreen from '../screens/user/UserProductsScreen';
 import EditProductScreen from '../screens/user/EditProductScreen';
+import StartupScreen from '../screens/StartupScreen';
+
+import Colors from '../constants/Colors';
 
 const defaultNavigationOptions = {
   headerStyle: {
@@ -92,6 +94,7 @@ const AuthNavigator = createStackNavigator({
 });
 
 const MainNavigator = createSwitchNavigator({
+  Startup: StartupScreen,
   Auth: AuthNavigator,
   Shop: ShopNavigator,
 });
