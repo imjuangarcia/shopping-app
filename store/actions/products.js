@@ -38,8 +38,9 @@ export const fetchProducts = () => async (dispatch) => {
   }
 };
 
-export const deleteProduct = (productId) => async (dispatch) => {
-  const response = await fetch(`https://shopping-cart-app-fc5f7.firebaseio.com/products/${productId}.json`, {
+export const deleteProduct = (productId) => async (dispatch, getState) => {
+  const { token } = getState().auth;
+  const response = await fetch(`https://shopping-cart-app-fc5f7.firebaseio.com/products/${productId}.json?auth=${token}`, {
     method: 'DELETE',
   });
 
@@ -52,8 +53,9 @@ export const deleteProduct = (productId) => async (dispatch) => {
   });
 };
 
-export const createProduct = (title, description, imageUrl, price) => async (dispatch) => {
-  const response = await fetch('https://shopping-cart-app-fc5f7.firebaseio.com/products.json', {
+export const createProduct = (title, description, imageUrl, price) => async (dispatch, getState) => {
+  const { token } = getState().auth;
+  const response = await fetch(`https://shopping-cart-app-fc5f7.firebaseio.com/products.json?auth=${token}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -80,8 +82,9 @@ export const createProduct = (title, description, imageUrl, price) => async (dis
   });
 };
 
-export const updateProduct = (id, title, description, imageUrl) => async (dispatch) => {
-  const response = await fetch(`https://shopping-cart-app-fc5f7.firebaseio.com/products/${id}.json`, {
+export const updateProduct = (id, title, description, imageUrl) => async (dispatch, getState) => {
+  const { token } = getState().auth;
+  const response = await fetch(`https://shopping-cart-app-fc5f7.firebaseio.com/products/${id}.json?auth=${token}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

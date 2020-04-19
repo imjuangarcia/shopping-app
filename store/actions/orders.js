@@ -34,9 +34,10 @@ export const fetchOrders = () => async (dispatch) => {
   }
 };
 
-export const addOrder = (cartItems, totalAmount) => async (dispatch) => {
+export const addOrder = (cartItems, totalAmount) => async (dispatch, getState) => {
+  const { token } = getState().auth;
   const date = new Date();
-  const response = await fetch('https://shopping-cart-app-fc5f7.firebaseio.com/orders/u1.json', {
+  const response = await fetch(`https://shopping-cart-app-fc5f7.firebaseio.com/orders/u1.json?auth=${token}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
