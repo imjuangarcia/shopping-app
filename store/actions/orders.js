@@ -3,9 +3,10 @@ import Order from '../../models/order';
 export const ADD_ORDER = 'ADD_ORDER';
 export const SET_ORDERS = 'SET_ORDERS';
 
-export const fetchOrders = () => async (dispatch) => {
+export const fetchOrders = () => async (dispatch, getState) => {
+  const { userId } = getState().auth;
   try {
-    const response = await fetch('https://shopping-cart-app-fc5f7.firebaseio.com/orders/u1.json');
+    const response = await fetch(`https://shopping-cart-app-fc5f7.firebaseio.com/orders/${userId}.json`);
 
     if (!response.ok) {
       throw new Error('Something went wrong!');
@@ -35,9 +36,9 @@ export const fetchOrders = () => async (dispatch) => {
 };
 
 export const addOrder = (cartItems, totalAmount) => async (dispatch, getState) => {
-  const { token } = getState().auth;
+  const { token, userId } = getState().auth;
   const date = new Date();
-  const response = await fetch(`https://shopping-cart-app-fc5f7.firebaseio.com/orders/u1.json?auth=${token}`, {
+  const response = await fetch(`https://shopping-cart-app-fc5f7.firebaseio.com/orders/${userId}.json?auth=${token}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

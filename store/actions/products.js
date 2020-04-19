@@ -5,7 +5,9 @@ export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const SET_PRODUCTS = 'SET_PRODUCTS';
 
-export const fetchProducts = () => async (dispatch) => {
+export const fetchProducts = () => async (dispatch, getState) => {
+  const { userId } = getState().auth;
+
   try {
     const response = await fetch('https://shopping-cart-app-fc5f7.firebaseio.com/products.json');
 
@@ -20,7 +22,7 @@ export const fetchProducts = () => async (dispatch) => {
       loadedProducts.push(
         new Product(
           key,
-          'u1',
+          responseData[key].ownerId,
           responseData[key].title,
           responseData[key].imageUrl,
           responseData[key].description,
@@ -32,6 +34,7 @@ export const fetchProducts = () => async (dispatch) => {
     dispatch({
       type: SET_PRODUCTS,
       products: loadedProducts,
+      userProducts: loadedProducts.filter((product) => product.ownerId === userId),
     });
   } catch (error) {
     throw error;
@@ -54,7 +57,7 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
 };
 
 export const createProduct = (title, description, imageUrl, price) => async (dispatch, getState) => {
-  const { token } = getState().auth;
+  const { token, userId } = getState().auth;
   const response = await fetch(`https://shopping-cart-app-fc5f7.firebaseio.com/products.json?auth=${token}`, {
     method: 'POST',
     headers: {
@@ -65,6 +68,7 @@ export const createProduct = (title, description, imageUrl, price) => async (dis
       description,
       imageUrl,
       price,
+      ownerId: userId,
     }),
   });
 
@@ -78,6 +82,7 @@ export const createProduct = (title, description, imageUrl, price) => async (dis
       description,
       imageUrl,
       price,
+      ownerId: userId,
     },
   });
 };
